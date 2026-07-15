@@ -1,0 +1,16 @@
+# VARCPU BARE-METAL EXOSKELETON HARDWARE MANIFEST
+# TARGET ENVIRONMENT: OS-LESS fluidic runtime
+
+[environmental_core]
+target_temperature_c = 21.5
+peltier_stabilization = true
+substrate_humidity_rh = 0.45
+
+[waveform_transceiver]
+base_injection_potential_v = 0.85
+adc_sampling_rate_ghz = 12.5
+input_channels = 1
+
+[runtime_routing_graph]
+node_0_entry_vector = [1000.0, 1000.0]
+node_0_expected_impedance_ohm = 50.0

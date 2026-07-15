@@ -1,0 +1,38 @@
+// --- SECURE CORE GRADLE NATIVE WRAPPER ---
+plugins {
+    id 'com.android.library' version '8.2.0' // Integrates with Android app structures
+}
+
+android {
+    namespace 'com.sovereigncore.otp'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 26
+        targetSdk 34
+    }
+
+    // Automates NDK binding and links the compiled Rust .so to the app assets
+    sourceSets {
+        main {
+            // Tells Android Studio to package the .so binary directly into the final build
+            jniLibs.srcDirs = ['target/aarch64-linux-android/release']
+        }
+    }
+}
+
+// Custom task that triggers Cargo automatically whenever Gradle builds the app
+tasks.register('compileRustLibrary', Exec) {
+    description = 'Triggers native NDK compilation for the Rust cryptographic core'
+    
+    // Assumes your Android NDK toolchain path variable is declared locally
+    environment "ANDROID_NDK_HOME", "${System.env.ANDROID_NDK_HOME ?: '/data/data/com.termux/files/home/Android/Sdk/ndk'}"
+    
+    commandLine 'cargo', 'build', '--target', 'aarch64-linux-android', '--release'
+}
+
+// Forces Gradle to compile the Rust binary BEFORE it tries to generate the final application
+tasks.matching { it.name.startsWith('preBuild') }.all {
+    depends_on compileRustLibrary
+}
+

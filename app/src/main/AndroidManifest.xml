@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://android.com"
+    package="com.sovereigncore.otp">
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:allowBackup="false"
+        android:label="Sovereign Core"
+        android:supportsRtl="true"
+        android:theme="@android:style/Theme.Material.NoActionBar">
+
+        <!-- Main User Interface Screen Dashboard -->
+        <activity 
+            android:name=".ui.CryptoActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Background encryption provider service -->
+        <service
+            android:name=".service.CryptoProviderService"
+            android:exported="true"
+            android:permission="com.sovereigncore.otp.permission.USE_CRYPTO">
+            <intent-filter>
+                <action android:name="com.sovereigncore.otp.action.BIND_CRYPTO_SERVICE" />
+            </intent-filter>
+        </service>
+
+    </application>
+</manifest>
+

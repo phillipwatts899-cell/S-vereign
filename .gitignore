@@ -2,3 +2,5 @@ target/
 .pytest_cache/
 *.zip
 *.tar.gz
+T3MP3ST/
+**/T3MP3ST/
